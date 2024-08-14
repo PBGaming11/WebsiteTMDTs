@@ -161,7 +161,6 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <input type="file" id="imageFile" accept="image/*">
-                                            <button id="uploadButton">Upload Image</button>
                                         </div>
                                         <div class="col-md-12">
                                             <table class="table table-hover" id="tbAnhSanPham">
@@ -173,7 +172,7 @@
                                                         <th>Thao tác</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="tbHtml">
                                                     <tr>
                                                         <td>1</td>
                                                         <td><img width="80" src="~/img/R.jpg" /></td>
@@ -251,9 +250,7 @@
                 reader.readAsDataURL(file);
             }
         });
-        function addImageProduct(url) { 
-            console.log(url);
-        }
+        
         document.getElementById('uploadButton').addEventListener('click', function () {
             var base64String = document.getElementById('imageBase64').value;
             if (base64String) {
@@ -264,5 +261,21 @@
                 alert("Please select an image first.");
             }
         });
+        function addImageProduct(url) {
+            var current = $('#tCurrentId').val();
+            var currentId = parseInt(current) + 1;
+
+            var str = `
+                <tr>
+                    <td>${currentId}</td>
+                    <td><img width="80" src="data:image/png;base64,${url}" /></td>
+                    <td><input type="radio" name="rDefault" /></td>
+                    <td><a href="#" class="btn btn-sm btn-danger">Xóa</a></td>
+                </tr>
+            `;
+
+            $('#tbHtml').append(str);
+        }
+
     </script>
 }
