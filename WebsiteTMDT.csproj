@@ -1,0 +1,124 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-WebsiteTMDT-2b9ffc40-52b2-4fa4-ad67-765b3a5a7b55</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.27" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.27" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.27" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.27" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.27" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.27" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.17" />
+    <PackageReference Include="PagedList.Core" Version="1.17.4" />
+    <PackageReference Include="PagedList.Core.Mvc" Version="3.0.0" />
+    <PackageReference Include="PagedList.Mvc" Version="4.0.0" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="10.1.2" />
+    <PackageReference Include="X.Web.PagedList" Version="10.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\ckfinder\userfiles\imgae\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\ckfinder\bin\Debug\CKFinder.dll" />
+    <None Include="wwwroot\ckfinder\bin\Debug\CKFinder.pdb" />
+    <None Include="wwwroot\ckfinder\bin\Release\CKFinder.dll" />
+    <None Include="wwwroot\ckfinder\ckfinder.js" />
+    <None Include="wwwroot\ckfinder\ckfinder_v1.js" />
+    <None Include="wwwroot\ckfinder\config.js" />
+    <None Include="wwwroot\ckfinder\config.ascx" />
+    <None Include="wwwroot\ckfinder\core\connector\aspx\connector.aspx" />
+    <None Include="wwwroot\ckfinder\help\files\other\help.js" />
+    <None Include="wwwroot\ckfinder\lang\bg.js" />
+    <None Include="wwwroot\ckfinder\lang\ca.js" />
+    <None Include="wwwroot\ckfinder\lang\cs.js" />
+    <None Include="wwwroot\ckfinder\lang\cy.js" />
+    <None Include="wwwroot\ckfinder\lang\da.js" />
+    <None Include="wwwroot\ckfinder\lang\de.js" />
+    <None Include="wwwroot\ckfinder\lang\el.js" />
+    <None Include="wwwroot\ckfinder\lang\en.js" />
+    <None Include="wwwroot\ckfinder\lang\eo.js" />
+    <None Include="wwwroot\ckfinder\lang\es-mx.js" />
+    <None Include="wwwroot\ckfinder\lang\es.js" />
+    <None Include="wwwroot\ckfinder\lang\et.js" />
+    <None Include="wwwroot\ckfinder\lang\fa.js" />
+    <None Include="wwwroot\ckfinder\lang\fi.js" />
+    <None Include="wwwroot\ckfinder\lang\fr.js" />
+    <None Include="wwwroot\ckfinder\lang\gu.js" />
+    <None Include="wwwroot\ckfinder\lang\he.js" />
+    <None Include="wwwroot\ckfinder\lang\hi.js" />
+    <None Include="wwwroot\ckfinder\lang\hr.js" />
+    <None Include="wwwroot\ckfinder\lang\hu.js" />
+    <None Include="wwwroot\ckfinder\lang\it.js" />
+    <None Include="wwwroot\ckfinder\lang\ja.js" />
+    <None Include="wwwroot\ckfinder\lang\lt.js" />
+    <None Include="wwwroot\ckfinder\lang\lv.js" />
+    <None Include="wwwroot\ckfinder\lang\nb.js" />
+    <None Include="wwwroot\ckfinder\lang\nl.js" />
+    <None Include="wwwroot\ckfinder\lang\nn.js" />
+    <None Include="wwwroot\ckfinder\lang\no.js" />
+    <None Include="wwwroot\ckfinder\lang\pl.js" />
+    <None Include="wwwroot\ckfinder\lang\pt-br.js" />
+    <None Include="wwwroot\ckfinder\lang\ro.js" />
+    <None Include="wwwroot\ckfinder\lang\ru.js" />
+    <None Include="wwwroot\ckfinder\lang\sk.js" />
+    <None Include="wwwroot\ckfinder\lang\sl.js" />
+    <None Include="wwwroot\ckfinder\lang\sr.js" />
+    <None Include="wwwroot\ckfinder\lang\sv.js" />
+    <None Include="wwwroot\ckfinder\lang\tr.js" />
+    <None Include="wwwroot\ckfinder\lang\vi.js" />
+    <None Include="wwwroot\ckfinder\lang\zh-cn.js" />
+    <None Include="wwwroot\ckfinder\lang\zh-tw.js" />
+    <None Include="wwwroot\ckfinder\plugins\dummy\lang\en.js" />
+    <None Include="wwwroot\ckfinder\plugins\dummy\lang\pl.js" />
+    <None Include="wwwroot\ckfinder\plugins\dummy\plugin.js" />
+    <None Include="wwwroot\ckfinder\plugins\fileeditor\bin\Debug\CKFinder_FileEditor.dll" />
+    <None Include="wwwroot\ckfinder\plugins\fileeditor\bin\Debug\CKFinder_FileEditor.pdb" />
+    <None Include="wwwroot\ckfinder\plugins\fileeditor\bin\Release\CKFinder_FileEditor.dll" />
+    <None Include="wwwroot\ckfinder\plugins\fileeditor\bin\Release\CKFinder_FileEditor.pdb" />
+    <None Include="wwwroot\ckfinder\plugins\fileeditor\codemirror\lib\codemirror.js" />
+    <None Include="wwwroot\ckfinder\plugins\fileeditor\codemirror\LICENSE" />
+    <None Include="wwwroot\ckfinder\plugins\fileeditor\codemirror\mode\clike\clike.js" />
+    <None Include="wwwroot\ckfinder\plugins\fileeditor\codemirror\mode\css\css.js" />
+    <None Include="wwwroot\ckfinder\plugins\fileeditor\codemirror\mode\htmlmixed\htmlmixed.js" />
+    <None Include="wwwroot\ckfinder\plugins\fileeditor\codemirror\mode\javascript\javascript.js" />
+    <None Include="wwwroot\ckfinder\plugins\fileeditor\codemirror\mode\xml\xml.js" />
+    <None Include="wwwroot\ckfinder\plugins\fileeditor\plugin.js" />
+    <None Include="wwwroot\ckfinder\plugins\flashupload\flash\Uploader.swf" />
+    <None Include="wwwroot\ckfinder\plugins\gallery\colorbox\jquery.colorbox-min.js" />
+    <None Include="wwwroot\ckfinder\plugins\gallery\colorbox\jquery.min.js" />
+    <None Include="wwwroot\ckfinder\plugins\imageresize\bin\Debug\CKFinder_ImageResize.dll" />
+    <None Include="wwwroot\ckfinder\plugins\imageresize\bin\Debug\CKFinder_ImageResize.pdb" />
+    <None Include="wwwroot\ckfinder\plugins\imageresize\bin\Release\CKFinder_ImageResize.dll" />
+    <None Include="wwwroot\ckfinder\plugins\imageresize\bin\Release\CKFinder_ImageResize.pdb" />
+    <None Include="wwwroot\ckfinder\plugins\imageresize\plugin.js" />
+    <None Include="wwwroot\ckfinder\plugins\watermark\bin\Debug\CKFinder_Watermark.dll" />
+    <None Include="wwwroot\ckfinder\plugins\watermark\bin\Debug\CKFinder_Watermark.pdb" />
+    <None Include="wwwroot\ckfinder\plugins\watermark\bin\Release\CKFinder_Watermark.dll" />
+    <None Include="wwwroot\ckfinder\plugins\watermark\bin\Release\CKFinder_Watermark.pdb" />
+    <None Include="wwwroot\ckfinder\skins\kama\skin.js" />
+    <None Include="wwwroot\ckfinder\skins\v1\skin.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CKFinder">
+      <HintPath>wwwroot\css\ckfinder\bin\Release\CKFinder.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

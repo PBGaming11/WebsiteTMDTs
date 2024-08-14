@@ -1,0 +1,239 @@
+﻿@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model X.PagedList.IPagedList<WebsiteTMDT.Areas.Admin.Models.EF.Product>
+@using X.PagedList;
+@using X.Web.PagedList
+@section naviheader {
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/Admin" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="../Admin/Products" class="nav-link">@ViewBag.Title</a>
+        </li>
+    </ul>
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lý sản phẩm</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">@ViewBag.Title</h3>
+
+            <div class="card-tools">
+                <a href="~/Admin/Products/Add" class="btn btn-primary">Thêm mới</a>
+                <a href="#" class="btn btn-danger" id="btnDeleteAll">Xóa</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    @using (Html.BeginForm("Index", "Products", FormMethod.Get))
+                    {
+                        <div class="input-group input-group-sm">
+                            @Html.TextBox("searchText", null, new { @class = "form-control" })
+                            <span class="input-group-append">
+                                <button type="submit" class="btn btn-info btn-flat">Tìm kiếm</button>
+                            </span>
+                        </div>
+                    }
+                </div>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="SellectAll" /></th>
+                        <th>STT</th>
+                        <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Danh mục</th>
+                        <th>Số lượng</th>
+                        <th>Giá tiền</th>
+                        <th>Ngày tạo</th>
+                        <th>Hiển thị</th>
+                        <th style="width:15opx;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        var i = ((ViewBag.Page - 1) * ViewBag.PageSize) + 1;
+                        foreach (var item in Model)
+                        {
+                            var strCheck = item.IsActive ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
+                            <tr id="trow_@item.Id">
+                                <td><input type="checkbox" class="cbkItem" value="@item.Id" /></td>
+                                <td>@i</td>
+                                <td>
+                                    @if (item.Image != null)
+                                    {
+                                        <img width="50" src="data:image/png;base64,@item.Image" />
+                                    }
+                                    else
+                                    {
+                                        <a>No Image</a>
+                                    }
+                                </td>
+                                <td>@item.Title</td>
+                                <td>@item.ProductCategory.Title</td>
+                                <td>@item.Quality</td>
+                                <td>@item.Price</td>
+                                <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <a href="#" data-id="@item.Id" class="btnActive">@Html.Raw(strCheck)</a>
+                                </td>
+                                <td>
+                                    <a href="/Admin/Products/Edit/@item.Id" class="btn btn-sm btn-primary">Sửa</a>
+                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                                </td>
+
+                            </tr>
+
+                            i++;
+                        }
+
+                    }
+                    else
+                    {
+                        <tr>
+                            <th colspan="4">Không có bản ghi nào!!!</th>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-12 text-right">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+@section scripts {
+    <script>
+        $('body').on('click', '#btnDeleteAll', function () {
+            var id = "";
+            var checkbox = $(this).parents('.card').find('tr td input:checkbox');// chọn checkbox
+            var i = 0;
+            checkbox.each(function () {
+                if (this.checked) {
+                    checkbox.attr('selected', 'checked');//set tất cả thành checked
+                    var _id = $(this).val();
+                    if (i === 0) {
+                        id += _id;
+                    } else {
+                        id += "," + _id;
+                    }
+                    i++;
+                } else {
+                    checkbox.attr('selected', '');
+                }
+            })
+            if (id.length > 0) {
+                var conf = confirm('Bạn có muốn xóa hay không?')
+                if (conf == true) {
+                    $.ajax({
+                        url: '/Admin/Products/DeleteAll',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                location.reload();
+                            }
+                        }
+
+                    });
+                }
+            }
+        });
+        $(document).ready(function () {
+            //js chọn tất cả
+            $('body').on('change', '#SellectAll', function () {
+                var checkStatus = this.checked;
+                var checkbox = $(this).parents('.card-body').find('tr td input:checkbox');// chọn checkbox
+                checkbox.each(function () {
+                    this.checked = checkStatus;
+                    if (this.checked) {
+                        checkbox.attr('selected', 'checked');//set tất cả thành checked
+                    } else {
+                        checkbox.attr('selected', '');
+                    }
+                })
+            });
+            //Js xóa tin tức
+            $('body').on('click', '.btnDelete', function () {
+                var id = $(this).data("id");
+                var conf = confirm('Bạn có muốn xóa không ?');
+                if (conf == true) {
+                    $.ajax({
+                        url: '/Admin/Products/Delete',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                $('#trow_' + id).remove();
+                            }
+                        }
+
+                    });
+                }
+            });
+            //JS thay đổi hiện thị trong danh sách tin tức
+            $('body').on('click', '.btnActive', function (e) {
+                e.preventDefault();
+                var btn = $(this);
+                var id = btn.data("id");
+                $.ajax({
+                    url: '/Admin/Products/IsActive',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs.success) {
+                            if (rs.isActive) {
+                                btn.html("<i class='fa fa-check text-success'></i>");
+                            } else {
+                                btn.html("<i class='fas fa-times text-danger'></i>");
+                            }
+                        }
+                    }
+
+                });
+            });
+        });
+    </script>
+}
+
+

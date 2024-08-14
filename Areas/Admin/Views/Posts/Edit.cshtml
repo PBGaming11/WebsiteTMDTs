@@ -1,0 +1,147 @@
+﻿@model WebsiteTMDT.Areas.Admin.Models.EF.Post
+
+@{
+    ViewData["Title"] = "Cập nhật bài viết";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section naviheader {
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/Admin" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/Admin/Posts" class="nav-link">@ViewBag.Title</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Cập nhật</a>
+        </li>
+    </ul>
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@ViewBag.Title</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">@ViewBag.Title</a></li>
+                    <li class="breadcrumb-item active">Cập nhật</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Thông tin @ViewBag.Title</h3>
+        </div>
+        <div class="card-body">
+            <div class="bs-stepper-content">
+                @using (Html.BeginForm("Edit", "Posts", FormMethod.Post, new { }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(x => x.Id)
+                    @Html.HiddenFor(x => x.CategoryId)
+                    @Html.HiddenFor(x => x.CreateDate)
+                    <div id="logins-part" class="content active dstepper-block" role="tabpanel" aria-labelledby="logins-part-trigger">
+                        <div class="form-group">
+                            <label for="Title">Tên tiêu đề</label>
+                            @Html.TextBoxFor(x => x.Title, new { @class = "form-control", @placeholder = "Tên danh mục" })
+                            @Html.ValidationMessageFor(x => x.Title, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="imageFile">Ảnh đại diện</label>
+                            <!-- Current Image Display -->
+                            <!-- File Input for New Image -->
+                            <input type="file" id="imageFile" class="form-control" accept="image/*" />
+
+                            <!-- Hidden Input to Store Base64 String of New Image -->
+                            <input type="hidden" id="imageBase64" name="Image" />
+                            <img id="currentImage" width="50" src="data:image/png;base64,@Model.Image" alt="Current Image" />
+                            <!-- Preview of New Image -->
+                            <img id="newImage" width="50" src="" alt="New Image Preview" style="display:none;" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Description">Mô tả</label>
+                            @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label for="Description">Chi tiết</label>
+                            @Html.TextBoxFor(x => x.Detail, new { @class = "form-control", @id = "txtDetail" })
+                        </div>
+                        <div class="form-group">
+                            <label for="SeoDescription">Hiển thị</label>
+                            @Html.CheckBoxFor(x => x.IsActive)
+                        </div>
+                        <div class="form-group">
+                            <label for="SeoTitle">Seo Title</label>
+                            @Html.TextBoxFor(x => x.SeoTitle, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label for="SeoDescription">Seo Description</label>
+                            @Html.TextBoxFor(x => x.SeoDescription, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label for="SeoKeywords">Seo Keywords</label>
+                            @Html.TextBoxFor(x => x.SeoKeywords, new { @class = "form-control" })
+                        </div>
+                        <a href="/Admin/Posts" class="btn btn-danger">Quay lại</a>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+@section scrip {
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('txtDetail', {
+                customConfig: '/ckeditor/config.js',
+                extraAllowedContent: 'span',
+            });
+        });
+        document.getElementById('imageFile').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const base64String = e.target.result;
+
+                    // Update the hidden input with the Base64 string
+                    document.getElementById('imageBase64').value = base64String.split(',')[1];
+
+                    // Update the new image preview
+                    const newImage = document.getElementById('newImage');
+                    newImage.src = base64String;
+                    newImage.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+}
